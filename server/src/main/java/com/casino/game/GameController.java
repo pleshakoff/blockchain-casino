@@ -20,10 +20,7 @@ class GameController {
 
     private final GameServiceImpl gameService;
 
-    @ExceptionHandler({ BindException.class})
-    public ResponseEntity handleException(BindException e) {
-        return ResponseEntity.badRequest().body(e.getAllErrors().get(0).getDefaultMessage());
-    }
+
 
     @GetMapping(value = "/balance/{address}", produces = {MediaType.TEXT_PLAIN_VALUE})
     @ApiOperation(value = "Get balance by address")

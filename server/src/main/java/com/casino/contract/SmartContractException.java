@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class SmartContractException extends RuntimeException {
 
     public SmartContractException() {
-        super("Sorry. I am not on duty today :(");
+        super("Smart contract operation error");
     }
 }

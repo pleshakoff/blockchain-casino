@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NotEnoughCasinoMoneyException extends RuntimeException {
 
     public NotEnoughCasinoMoneyException() {
-        super("You don't have enough money for bet");
+        super("Casino don't have enough money for your bet");
     }
 }
