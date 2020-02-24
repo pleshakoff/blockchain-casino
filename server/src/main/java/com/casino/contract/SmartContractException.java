@@ -1,4 +1,4 @@
-package com.casino.exceptions;
+package com.casino.contract;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

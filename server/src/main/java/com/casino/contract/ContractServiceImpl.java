@@ -56,6 +56,55 @@ class ContractServiceImpl implements ContractService {
         log.info("Smart contract deployed to address " + contractAddress);
     }
 
+    @Override
+    public BigInteger getBalanceOf(String address) {
+
+        try {
+            log.info("Get balance  for {}",address);
+            return contract.balanceOf(address).send();
+        } catch (Exception e) {
+            log.error("Get balance of",e);
+            throw  new SmartContractException();
+        }
+    }
+
+    @Override
+    public void withdraw(String address) {
+
+        try {
+            log.info("Withdraw  for {}",address);
+            contract.withdraw(address, BigInteger.ZERO).send();
+        } catch (Exception e) {
+            log.error("Withdraw",e);
+            throw  new SmartContractException();
+        }
+    }
+
+    @Override
+    public void give(String address, BigInteger value) {
+
+        try {
+            log.info("Send money {} for {}",value,address);
+            contract.give(address, value).send();
+        } catch (Exception e) {
+            log.error("Send money",e);
+            throw  new SmartContractException();
+        }
+    }
+
+    @Override
+    public void take(String address, BigInteger value) {
+
+        try {
+            log.info("Take money {} from {}",value,address);
+            contract.take(address, value).send();
+        } catch (Exception e) {
+            log.error("Send money",e);
+            throw  new SmartContractException();
+        }
+    }
+
+
 
 
 }
