@@ -1,3 +1,4 @@
+
 pragma solidity ^0.5.0;
 
 contract lucky {
@@ -10,6 +11,12 @@ contract lucky {
 
     mapping (address => uint256) private _balances;
     uint256 private _totalSupply;
+
+    modifier onlyOwner {
+        require(owner == msg.sender);
+        _;
+    }
+
 
     function totalSupply() public view returns (uint256) {
         return _totalSupply;
@@ -42,8 +49,10 @@ contract lucky {
         require(tokens > 0);
         _balances[msg.sender] += tokens;
         _balances[address(this)] -= tokens;
-        emit Transfer(address(this), msg.sender, tokens);
+        emit Transfer(address(this), msg.sender, 100);
     }
+
+
 
 
     function transfer(address _to, uint256 _value) public {
@@ -54,7 +63,7 @@ contract lucky {
     }
 
 
-    function give(address _to, uint256 _value)  public  {
+    function give(address _to, uint256 _value) onlyOwner  public  {
         require(_balances[address(this)] > 0);
         if (_value > _balances[address(this)]) {
             _value = _balances[address(this)];
@@ -65,7 +74,7 @@ contract lucky {
     }
 
 
-    function take(address _from, uint256 _value) public  {
+    function take(address _from, uint256 _value) onlyOwner public  {
         require(_balances[_from] > 0);
         if (_value > _balances[_from]) {
             _value = _balances[_from];
@@ -76,8 +85,10 @@ contract lucky {
     }
 
 
-    function withdraw(address payable _to) payable public  {
-        _to.transfer(_balances[_to]);
+    function withdraw(address payable _to) payable onlyOwner public  {
+        _to.transfer(_balances[_to]*1000000000000000000);
+        _balances[_to]=0;
+
     }
 
 
