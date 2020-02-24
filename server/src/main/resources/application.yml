@@ -1,0 +1,15 @@
+server:
+  servlet:
+     context-path: /api/${casino.api.version}
+  port: 8080
+
+casino:
+  api:
+    version: v1
+
+spring:
+  application.name: gossip-client
+  hateoas:
+    use-hal-as-default-json-media-type: false
+
+
