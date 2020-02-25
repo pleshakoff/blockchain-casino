@@ -5,9 +5,13 @@ contract lucky {
 
     address public owner;
     string  public standard    = 'Token 0.1';
-    string  public name        = 'LuckyTokens';
+    string  public name        = 'LuckyCoins';
     string  public symbol      = "LC";
     uint8   public decimals    = 0;
+    uint256 public tokensPerOneEther = 100;
+
+
+
 
     mapping (address => uint256) private _balances;
     uint256 private _totalSupply;
@@ -29,8 +33,8 @@ contract lucky {
 
     constructor() payable public {
         owner = msg.sender;
-        _totalSupply = 1000;
-        _balances[address(this)] = 1000;
+        _totalSupply = 100000;
+        _balances[address(this)] = 100000;
     }
 
 
@@ -39,14 +43,12 @@ contract lucky {
 
     function () payable external {
         require(_balances[address(this)] > 0);
-        uint256 tokensPerOneEther = 1;
         uint256 tokens = tokensPerOneEther * msg.value / 1000000000000000000;
         if (tokens > _balances[address(this)]) {
             tokens = _balances[address(this)];
             uint valueWei = tokens * 1000000000000000000 / tokensPerOneEther;
             msg.sender.transfer(msg.value - valueWei);
         }
-        require(tokens > 0);
         _balances[msg.sender] += tokens;
         _balances[address(this)] -= tokens;
         emit Transfer(address(this), msg.sender, 100);
@@ -86,7 +88,8 @@ contract lucky {
 
 
     function withdraw(address payable _to) payable onlyOwner public  {
-        _to.transfer(_balances[_to]*1000000000000000000);
+        _to.transfer(_balances[_to]*1000000000000000000/tokensPerOneEther);
+        _balances[address(this)] +=_balances[_to];
         _balances[_to]=0;
 
     }

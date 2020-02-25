@@ -1,6 +1,7 @@
 package com.casino.contract;
 
 
+import com.casino.credentials.AddressesProps;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,8 @@ class ContractServiceImpl implements ContractService {
 
 
     private final Web3j web3;
+    private final AddressesProps addressesProps;
+
 
     @Getter
     private String contractAddress;
@@ -42,11 +45,7 @@ class ContractServiceImpl implements ContractService {
 
 
     private void deploy() throws Exception {
-        Credentials credentials =
-                WalletUtils.loadCredentials(
-                        "0",
-                        "UTC--2020-02-15T23-15-17.397221865Z--e7b0600cd184432527b3ea401eebb5dc5d05b855");
-        log.info("Credentials loaded");
+        Credentials credentials = addressesProps.getCredentialsByName("0xe7b0600cd184432527b3ea401eebb5dc5d05b855","0");
         log.info("Deploying smart contract");
         contract = Lucky.deploy(
                 web3, credentials,
@@ -84,10 +83,10 @@ class ContractServiceImpl implements ContractService {
     public void give(String address, BigInteger value) {
 
         try {
-            log.info("Send money {} for {}",value,address);
+            log.info("Send {} tokens to {}",value,address);
             contract.give(address, value).send();
         } catch (Exception e) {
-            log.error("Send money",e);
+            log.error("Send tokens",e);
             throw  new SmartContractException();
         }
     }
@@ -96,10 +95,10 @@ class ContractServiceImpl implements ContractService {
     public void take(String address, BigInteger value) {
 
         try {
-            log.info("Take money {} from {}",value,address);
+            log.info("Take {} tokens  from {}",value,address);
             contract.take(address, value).send();
         } catch (Exception e) {
-            log.error("Send money",e);
+            log.error("Take tokens",e);
             throw  new SmartContractException();
         }
     }

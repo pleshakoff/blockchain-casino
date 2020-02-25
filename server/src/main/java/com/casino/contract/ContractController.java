@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "",produces = {MediaType.TEXT_PLAIN_VALUE})
 @Api(tags = "Contract")
 @RequiredArgsConstructor
 class ContractController {
 
     private final ContractService contractService;
 
-    @GetMapping(value = "/address",produces = {MediaType.TEXT_PLAIN_VALUE})
+    @GetMapping(value = "/address")
     @ApiOperation(value = "Get contract address")
     public String getCurrentPeerState() {
         return contractService.getContractAddress();

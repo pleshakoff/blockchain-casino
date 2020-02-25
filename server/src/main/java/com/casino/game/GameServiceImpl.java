@@ -31,7 +31,7 @@ class GameServiceImpl implements GameService {
 
 
     private Short getRandom() {
-       return 42;
+       return 42; // :)
     }
 
     @Override
@@ -41,10 +41,10 @@ class GameServiceImpl implements GameService {
         if (contractService.getBalanceOf(address).compareTo(bet)<0) {
             throw new NotEnoughPlayerMoneyException();
         }
-        if (contractService.getBalanceOf(contractService.getContractAddress()).compareTo(bet)<0) {
-            throw new NotEnoughCasinoMoneyException();
-        }
         if (betDto.getGuess().equals(getRandom())) {
+            if (contractService.getBalanceOf(contractService.getContractAddress()).compareTo(bet)<0) {
+                throw new NotEnoughCasinoMoneyException();
+            }
             contractService.give(address, bet);
             return "You are WINNER!!!! Check your balance, lucky!!!!";
         } else {

@@ -3,9 +3,18 @@ server:
      context-path: /api/${casino.api.version}
   port: 8080
 
+blockchain:
+  host: 127.0.0.1
+  port: 8545
+  addresses:
+    -
+      name: "0xe7b0600cd184432527b3ea401eebb5dc5d05b855"
+      file: UTC--2020-02-15T23-15-17.397221865Z--e7b0600cd184432527b3ea401eebb5dc5d05b855
+
 casino:
   api:
     version: v1
+
 
 spring:
   application.name: gossip-client
