@@ -132,7 +132,7 @@ Swagger тут http://localhost:8080/api/v1/swagger-ui.html#/
 <a name="examples"></a>
 ## Примеры
 
-Для тестировоания в блокчейне заведено два аккаунта: 
+Для тестирования, в блокчейне заведено два аккаунта: 
 
 **0xe7b0600cd184432527b3ea401eebb5dc5d05b855** 
 
@@ -147,7 +147,7 @@ Swagger тут http://localhost:8080/api/v1/swagger-ui.html#/
 **0x1ad4F70b6a49d0448C1f1392db93793BFF540E2b** 
 
 Обычный пользователь. На счету при запуске 100 эфиров.
-Использеутся для тестирования.  
+Рекомендую для тестирования использовать именно его.  
 [JSON](https://github.com/pleshakoff/blockchain-casino/blob/master/geth/UTC--2020-02-23T03-54-10.906285725Z--1ad4f70b6a49d0448c1f1392db93793bff540e2b).
 
 Пароль: 12345
@@ -164,7 +164,7 @@ Swagger тут http://localhost:8080/api/v1/swagger-ui.html#/
 Спасает переустановка плагина. 
 `
 
-Кошелек умеет подключается к локальной ноде 
+Этот кошелек умеет подключается к локальной ноде 
 
 ![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamsk_networks.png?raw=true"")
 
@@ -186,14 +186,57 @@ Swagger тут http://localhost:8080/api/v1/swagger-ui.html#/
 
 Если все хорошо то на счету будет 0 LC 
 
-Для того чтобы пополнить счет надо в кошельке перевести эфир на адрес смарт-контракта. 
+Для того чтобы пополнить счет, надо в кошельке перевести эфир на адрес смарт-контракта. 
 100LC за 1 ETH 
 
 После подтверждения транзакции баланс ETH умееньшится, а LC увеличится.  
 
-![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamsk_token.png?raw=true"")
+![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamask-result.png?raw=true"")
+
+###Ставки
+
+Играть надо через swagger http://localhost:8080/api/v1/swagger-ui.html#/
+
+Для того чтобы посмотреть баланс игрока выполняем метод 
+
+http://localhost:8080/api/v1/balance/0x1ad4F70b6a49d0448C1f1392db93793BFF540E2b
+
+Для того чтобы сделать ставку надо вызвать метод: 
+
+**POST** http://localhost:8080/api/v1/play/0x1ad4F70b6a49d0448C1f1392db93793BFF540E2b  
+
+{
+  "bet": 500,  
+  "guess": 13
+}
+
+bet - ставка. 
+guess - число. 
 
 
+Попытайте счастье несколько раз. 
+Можно проверять баланс в swagger или в кошельке. 
+Если вы не будете угадывать, то он будет уменьшаться, если будете угадывать увеличиваться. 
+ 
+Чтобы вывести эфир надо выполнить метод 
+http://localhost:8080/api/v1/withdraw/0x1ad4F70b6a49d0448C1f1392db93793BFF540E2b
+
+Помните, у казино нет своих денег, если играете один то вывести больше чем ввести не получиться.
+
+<details>
+  <summary>Как рабогатеть</summary>
+  
+  Spoiler text. Note that it's important to have a space after the summary tag. You should be able to write any markdown you want inside the `<details>` tag... just make sure you close `<details>` afterward.
+
+Чтобы выиграть введите guess = 42.  
+В текущей реализации рандом не настоящий.   
+  
+  ```javascript
+  console.log("I'm a code block!");
+  ```
+  
+</details>  
+ 
 
    
   
