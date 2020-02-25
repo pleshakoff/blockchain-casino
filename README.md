@@ -131,9 +131,19 @@ docker run --name bc-server --rm -p 8080:8080 --net casino-net pleshakoff/blockc
 
 Сервер при запуске попытается задеплоить контракт, это произойдет как только стартует майнинг.
 
-После того как сервер сартует надо получить адрес смарт-контракта http://localhost:8080/api/v1/address
+После того как сервер окончательно сартует, можно будет получить адрес смарт-контракта http://localhost:8080/api/v1/address
 
 Swagger тут http://localhost:8080/api/v1/swagger-ui.html#/ 
+
+Очистка 
+
+```
+docker stop bc-server
+docker stop bc-geth
+docker rmi pleshakoff/blockchain-casino-server:1.0.0
+docker rmi pleshakoff/blockchain-casino-geth:1.0.0 
+docker network rm casino-net
+```
 
 <a name="examples"></a>
 ## Примеры
