@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 
 contract lucky {
 
-    address public owner;
+    address payable public owner;
     string  public standard    = 'Token 0.1';
     string  public name        = 'LuckyCoins';
     string  public symbol      = "LC";
@@ -55,8 +55,6 @@ contract lucky {
     }
 
 
-
-
     function transfer(address _to, uint256 _value) public {
         require(_balances[msg.sender] >= _value);
         _balances[msg.sender] -= _value;
@@ -94,6 +92,9 @@ contract lucky {
 
     }
 
+    function withdrawowner() payable onlyOwner public  {
+        owner.transfer(address(this).balance);
+    }
 
 
 

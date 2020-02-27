@@ -2,7 +2,6 @@ docker build -t geth-local .
 docker run --name geth-local  --rm -it -p 8545:8545 geth-local
 docker exec -it geth-local bash
 
-
 docker network create --subnet=172.77.0.0/16 casino-net
 docker run --name bc-geth  --rm -it -p 127.0.0.1:8545:8545 --net casino-net --ip 172.77.0.2 pleshakoff/blockchain-casino-geth:1.0.0
 docker run --name bc-server  --rm -p 8080:8080 --net casino-net pleshakoff/blockchain-casino-server:1.0.0 -e --blockchain.host=172.77.0.2 --blockchain.port=8545
@@ -18,10 +17,13 @@ web3.personal.unlockAccount("0xe7b0600cd184432527b3ea401eebb5dc5d05b855","0")
 eth.sendTransaction({from:"0xe7b0600cd184432527b3ea401eebb5dc5d05b855",to:"1ad4f70b6a49d0448c1f1392db93793bff540e2b",value:web3.toWei(22, "ether")})
 web3.fromWei( eth.getBalance("1ad4f70b6a49d0448c1f1392db93793bff540e2b"))
 
+web3.personal.unlockAccount("1ad4f70b6a49d0448c1f1392db93793bff540e2b","12345")
+eth.sendTransaction({from:"1ad4f70b6a49d0448c1f1392db93793bff540e2b",to:"0x22f364db94d05c96a0ebb10de5f54318958c61a0",value:web3.toWei(30, "ether")})
+
+
 eth.sendTransaction({from:"0xe7b0600cd184432527b3ea401eebb5dc5d05b855",to:"1ad4f70b6a49d0448c1f1392db93793bff540e2b",value:web3.toWei(22, "ether")})
 web3.personal.unlockAccount("1ad4f70b6a49d0448c1f1392db93793bff540e2b","0")
 
 
-
-web3j truffle generate  lucky.json -p org.casino -o .
+web3j truffle generate  lucky.json -p com.casino.contract -o .
 
