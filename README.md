@@ -19,10 +19,10 @@ Smart contract written in Solidity language and
 deployed in the blockchain is used to manage coins.   
 The game logic is implemented in Java app.
 
-The game is that the user trying to guess a number from 1 to 50. 
+The game: The user tries to guess a number from 1 to 50. 
 At the same time, he has to make a bet in coins. If the number is guessed, 
-coins in the amount of his bet are transferred to the user's account. If the number is not guessed, 
-the bet is withdrawn from the user's account. 
+coins amounting to his bet are transferred to the user's account. If the number is not guessed, 
+the bet amount is withdrawn from the user's account. 
 
 Initial coins are transferred to the user's account if ether is sent to the smart contract address. 
 100 coins are credited for one ether. 
@@ -30,19 +30,19 @@ The amount of bets is limited only by the player's account or the casino's reser
 
 The player can close the account and all his coins will be transferred to the Ether and sent to his account. 
 
-Unfortunately, the casino operates on the principle of Ponzi scheme, 
+Unfortunately, the casino operates on the principle of a Ponzi scheme, 
 without investing its own funds.
 When tokens are exchanged back to the ether, the winnings are paid from funds 
 deposited by other players. 
-Therefore, if a player tries to exit and the amount of coins in his account, transferred to the ether, 
-exceeds the reserves of ether at the casino, the casino will refuse him :)          
+Therefore, if a player tries to exit and withdraw the amount of coins in his account that are transferred to the ether, 
+or exceeds the reserves of ether in the casino, the casino will refuse him :)          
      
 
 ### Smart contract 
 
 https://github.com/pleshakoff/blockchain-casino/blob/master/contract/contracts/Lucky.sol
 
-When transferring the ether to the smart contract address, it counts 
+When transferring the ether to the smart contract address, it transfers 
 Lucky Coin game coins to the sender's account. 
 
 Also, the smart contract returns the balance data of each coin holder. 
@@ -61,7 +61,7 @@ https://github.com/pleshakoff/blockchain-casino/tree/master/server
 
 You can work with the API via swagger (more details in [API](#api))
 
-The server interacts with the smart contract via special adapter.
+The server interacts with the smart contract via a special adapter.
 The technology is as follows: 
 * a smart contract is compiled by truffle
 * as a result, a JSON describing the signatures of smart contract methods is generated 
@@ -85,10 +85,10 @@ http://localhost:8080/api/v1/swagger-ui.html#/
    
 The following groups of methods are available in the API 
 
-* Contract. Returns the contract address that is given to it after deployment.
-This address is used to transfer ether or connect  token in a wallet. 
+* Contract. Returns the contract address that is received after deployment.
+This address is used to transfer ether or connect tokens in a wallet. 
 * Game. Getting data about the player's balance. The game itself. Closing the account. 
-* Blockchain. A service method that allows to view the balance of the ether at a given address.
+* Blockchain. A service method that allows viewing the balance of the ether at a given address.
 
 #### Realization
 
@@ -107,7 +107,7 @@ just lies in the same container.
 <a name="get-started"></a>
 ## Get started 
 
-To deploy the system, follow these steps
+To deploy the system, follow these steps:
 
 Create a private network for mask docker 172.77.0.0
 
@@ -129,7 +129,7 @@ Starting the server. Please note that ip 172.77.0.2 and the geth node port are p
 docker run --name bc-server --rm -p 8080:8080 --net casino-net pleshakoff/blockchain-casino-server:1.0.0 -e --blockchain.host=172.77.0.2 --blockchain.port=8545
 ```
 
-The server will try to deploy the contract at startup. It will happen as soon as mining starts.
+The server will try to deploy the contract at startup. This happens as soon as mining starts.
 
 After the server finally starts, it will be possible to get the address of the smart contract http://localhost:8080/api/v1/address 
 
@@ -175,13 +175,8 @@ Password: 12345
 In order to buy coins, you need to transfer the ether to the contract account.  
 For convenient transfer of ether between accounts, you can use a wallet
 I used an extension for chrome https://metamask.io 
-It allows to connect to a local node. 
+It allows a connection to a local node. 
 You can also send money directly via the console of the blockchain node (more details [here](#cmd)) 
-
-`There is only one aspect. When restarting the node, if the wallet has already been connected, 
-sometimes there are problems with transactions.
-Reinstalling the plugin helps. 
-`
 
 ![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamsk_networks.png?raw=true"")
 
@@ -193,11 +188,11 @@ And enter the password: 12345.
 
 ![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamask_new.png?raw=true"")
 
-If everything is correct, you will see that the user has 100 ETH on his account
+If everything is correct, you will see that the user has 100 ETH in his account
 
-You can also connect our coins to the wallet and then you will see how many of them the user has. 
+You can also connect our coins to the wallet and then you will see how many coins the user has. 
 For this, you need to add a token, and specify the address of 
-our contract as the address in the "Custom Token" tab, which can be found here http://localhost:8080/api/v1/address 
+our contract as the address in the "Custom Token" tab, which can be found here: http://localhost:8080/api/v1/address 
 
 ![alt text](https://github.com/pleshakoff/blockchain-casino/blob/master/metamsk_token.png?raw=true"")
 
@@ -239,7 +234,7 @@ the smart contract address is here http://localhost:8080/api/v1/address )
 ``` 
 eth.sendTransaction({from:"1ad4f70b6a49d0448c1f1392db93793bff540e2b",to:"the smart contract address is here",value:web3.towei(30, "ether")}) 
 ```
-Check via application that the ether came to the smart contract address (you can use swagger)
+Check via application that the ether has been entered to the smart contract address (you can use swagger)
 
 http://localhost:8080/api/v1/blockchain/balance/SmartContractAddressHere
 
@@ -271,9 +266,9 @@ guess is a number.
 
 Try your luck a few times. 
 You can check the balance in swagger or in the wallet. 
-If you don't guess, it will decrease, if you guess, it will increase. 
+If you guess incorrectly, it will decrease, if you guess correctly, it will increase. 
  
-To exit the coins and withdraw the ether, you need to execute method 
+To exit the coins and withdraw the ether, you need to execute method: 
 **POST** http://localhost:8080/api/v1/withdraw/0x1ad4F70b6a49d0448C1f1392db93793BFF540E2b
 
 Remember, the casino does not have its own money. If you play alone, you cannot withdraw more than you entered.
